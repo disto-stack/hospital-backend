@@ -10,13 +10,10 @@ dbConnection()
 
 app.use(cors())
 
-// Routes
-app.get('/', (req, res) => {
-    res.json({
-        ok: true,
-        msg: 'Hello world'
-    })
-})
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/api/users', require('./routes/users'))
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
