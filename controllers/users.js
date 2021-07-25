@@ -1,5 +1,7 @@
 const User = require('../models/users')
 
+const bcrypt = require('bcryptjs')
+
 const getUsers = async (req, res) => {
     const users = await User.find({}, 'name email role google')
 
@@ -10,12 +12,11 @@ const getUsers = async (req, res) => {
 }
 
 const createUsers = async (req, res) => {
-    const { email } = req.body
+    const { email, password } = req.body
 
     try {
 
         const existsEmail = await User.findOne({ email })
-        console.log(existsEmail);
         if (existsEmail) {
             return res.status(400).json({
                 ok: false,
@@ -24,12 +25,15 @@ const createUsers = async (req, res) => {
         }
 
         const user = new User(req.body)
+
+        const salt = bcrypt.genSaltSync()
+        user.password = bcrypt.hashSync(password, salt)
+
         await user.save()
 
         res.json({
             ok: true,
-            message: 'User saved!',
-            user
+            message: 'User saved successfully!'
         })
 
     } catch (error) {
