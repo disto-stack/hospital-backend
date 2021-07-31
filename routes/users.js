@@ -3,10 +3,11 @@ const { getUsers, createUser, updateUser, deleteUser } = require('../controllers
 
 const { check } = require('express-validator')
 const { validateFields } = require('../middlewares/validateFields')
+const { validateJWT } = require('../middlewares/validateJWT')
 
 const router = Router()
 
-router.get('/', getUsers)
+router.get('/', validateJWT, getUsers)
 
 router.post(
     '/', 
@@ -21,6 +22,7 @@ router.post(
 
 router.put('/:id',
     [
+        validateJWT,
         check('name', 'name invalid or empty').notEmpty(),
         check('role', 'role invalid or empty').notEmpty(),
         check('email', 'email invalid or empty').notEmpty().isEmail(),
@@ -29,6 +31,6 @@ router.put('/:id',
     updateUser
 )
 
-router.delete('/:id', deleteUser)
+router.delete('/:id', validateJWT, deleteUser)
 
 module.exports = router

@@ -1,13 +1,15 @@
 const User = require('../models/users')
 
 const bcrypt = require('bcryptjs')
+const { generateJWT } = require('../helpers/jwt')
 
 const getUsers = async (req, res) => {
     const users = await User.find({}, 'name email role google')
 
     res.json({
         ok: true,
-        users
+        users,
+        userId: req.userId
     })
 }
 
@@ -31,9 +33,16 @@ const createUser = async (req, res) => {
 
         await user.save()
 
+        const token = await generateJWT(user.id)
+
         res.json({
             ok: true,
-            message: 'User saved successfully!'
+            user: {
+                id: user.id,
+                email: user.email,
+                name: user.name
+            },
+            token
         })
 
     } catch (error) {
@@ -115,8 +124,6 @@ const deleteUser = async (req, res) => {
         })
         
     } catch (error) {
-
-        console.log(error);
 
         res.status(500).json({
             ok: false,

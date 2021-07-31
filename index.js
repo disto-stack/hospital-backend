@@ -14,6 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/users', require('./routes/users'))
+app.use('/api/login', require('./routes/auth'))
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
