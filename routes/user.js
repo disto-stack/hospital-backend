@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { getUsers, createUser, updateUser, deleteUser } = require('../controllers/user')
+const { getUsers, getUsersCount, createUser, updateUser, deleteUser } = require('../controllers/user')
 
 const { check } = require('express-validator')
 const { validateFields } = require('../middlewares/validateFields')
@@ -8,6 +8,8 @@ const { validateJWT } = require('../middlewares/validateJWT')
 const router = Router()
 
 router.get('/', validateJWT, getUsers)
+
+router.get('/count', validateJWT, getUsersCount)
 
 router.post(
     '/', 

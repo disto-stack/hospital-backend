@@ -4,13 +4,40 @@ const bcrypt = require('bcryptjs')
 const { generateJWT } = require('../helpers/jwt')
 
 const getUsers = async (req, res) => {
-    const users = await User.find({}, 'name email role google')
+    const from = Number(req.query.from) || 0
+
+    const users = await User
+        .find({}, 'name email role google')
+        .skip(from)
+        .limit(5)
 
     res.json({
         ok: true,
         users,
         userId: req.userId
     })
+}
+
+const getUsersCount = async (req, res) => {
+
+    try {
+
+        const totalCountUsers = await User.count()
+
+        res.json({
+            ok: true,
+            count: totalCountUsers
+        })
+        
+    } catch (error) {
+        
+        res.status(500).json({
+            ok: false,
+            message: 'Unexpected server error. Try again!'
+        })
+
+    }
+
 }
 
 const createUser = async (req, res) => {
@@ -135,6 +162,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     getUsers,
+    getUsersCount,
     createUser,
     updateUser,
     deleteUser
