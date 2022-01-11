@@ -13,9 +13,11 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/api/users', require('./routes/users'))
+app.use('/api/user', require('./routes/user'))
 app.use('/api/login', require('./routes/auth'))
-app.use('/api/hospitals', require('./routes/hospitals'))
+app.use('/api/hospital', require('./routes/hospital'))
+app.use('/api/doctorS', require('./routes/doctor'))
+
 
 
 const port = process.env.PORT || 8080

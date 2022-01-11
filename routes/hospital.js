@@ -1,6 +1,6 @@
 const { Router } = require('express')
 
-const { getHospitals, createHospital, updateHospital, deleteHospital } = require('../controllers/hospitals')
+const { getHospitals, createHospital, updateHospital, deleteHospital } = require('../controllers/hospital')
 
 const { check } = require('express-validator')
 const { validateFields } = require('../middlewares/validateFields')
