@@ -12,7 +12,11 @@ router.get('/', validateJWT, getHospitals)
 
 router.post(
     '/', 
-    [], 
+    [
+        validateJWT,
+        check('name', 'hospital name empty or invalid').notEmpty(),
+        validateFields
+    ], 
     createHospital
 )
 

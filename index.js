@@ -16,9 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/user', require('./routes/user'))
 app.use('/api/login', require('./routes/auth'))
 app.use('/api/hospital', require('./routes/hospital'))
-app.use('/api/doctorS', require('./routes/doctor'))
-
-
+app.use('/api/doctor', require('./routes/doctor'))
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {

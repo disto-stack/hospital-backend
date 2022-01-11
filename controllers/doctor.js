@@ -4,16 +4,44 @@ const bcrypt = require('bcryptjs')
 const { generateJWT } = require('../helpers/jwt')
 
 const getDoctors = async (req, res) => {
-    const users = await User.find({}, 'name email role google')
+    const doctors = await Doctor.find({}, 'name img user hospital')
 
     res.json({
         ok: true,
-        msg: 'hi'
+        doctors
     })
 }
 
 const createDoctor = async (req, res) => {
+    const userId = req.userId
+    if (!userId) {
+        res.status(500).json({
+            ok: false,
+            message: 'Not exists user in the request'
+        })
+    }
+
+    const doctor = new Doctor({
+        user: userId,
+        ...req.body
+    })
     
+    try {
+
+        await doctor.save()
+
+        res.json({
+            ok: true,
+            doctor
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Unexpected server error. Try again!'
+        })
+    }
+
 }
 
 const updateDoctor = async (req, res) => {

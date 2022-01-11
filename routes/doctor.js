@@ -12,7 +12,12 @@ router.get('/', validateJWT, getDoctors)
 
 router.post(
     '/', 
-    [], 
+    [
+        validateJWT,
+        check('name', 'doctor name empty or invalid').notEmpty(),
+        check('hospital', 'hospital empty or invalid').isMongoId(),
+        validateFields
+    ], 
     createDoctor
 )
 
