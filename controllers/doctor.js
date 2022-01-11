@@ -5,6 +5,8 @@ const { generateJWT } = require('../helpers/jwt')
 
 const getDoctors = async (req, res) => {
     const doctors = await Doctor.find({}, 'name img user hospital')
+        .populate('user', 'name')
+        .populate('hospital', 'name')
 
     res.json({
         ok: true,

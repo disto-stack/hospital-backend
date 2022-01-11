@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const { generateJWT } = require('../helpers/jwt')
 
 const getHospitals = async (req, res) => {
-    const hospitals = await Hospital.find({}, 'name img user')
+    const hospitals = await Hospital.find({}, 'name img user').populate('user', 'name img')
 
     return res.json({
         ok: true,
