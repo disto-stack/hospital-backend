@@ -7,7 +7,7 @@ const getUsers = async (req, res) => {
     const from = Number(req.query.from) || 0
 
     const users = await User
-        .find({}, 'name email role google')
+        .find({}, 'name email role google img')
         .skip(from)
         .limit(5)
 

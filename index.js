@@ -18,6 +18,7 @@ app.use('/api/hospital', require('./routes/hospital'))
 app.use('/api/doctor', require('./routes/doctor'))
 app.use('/api/login', require('./routes/auth'))
 app.use('/api/search', require('./routes/search'))
+app.use('/api/upload', require('./routes/upload'))
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
