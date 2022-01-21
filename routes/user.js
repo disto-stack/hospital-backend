@@ -14,6 +14,7 @@ router.get('/count', validateJWT, getUsersCount)
 router.post(
     '/', 
     [
+        validateJWT,
         check('name', 'name invalid or empty').notEmpty(),
         check('password', 'password invalid or empty').notEmpty(),
         check('email', 'email invalid or empty').notEmpty().isEmail(),
