@@ -45,9 +45,61 @@ const createHospital = async (req, res) => {
 
 const updateHospital = async (req, res) => {
 
+    const { id } = req.params
+    const userId = req.userId
+
+    try {
+
+        const foundHospital = Hospital.findById(id)
+        if (!foundHospital) {
+            req.status(400).json({
+                ok: false,
+                message: 'Hospital not found. Try with other id'
+            })
+        }
+
+        const hospitalModified = {
+            ...req.body,
+            user: userId
+        }
+
+        const updatedHospital = await Hospital.findByIdAndUpdate(id, hospitalModified, { new: true })
+
+        res.json({
+            ok: true,
+            updatedHospital
+        })
+
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Unexpected server error. Try again!'
+        })
+    }
+
 }
 
 const deleteHospital = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+
+        await Hospital.findByIdAndRemove(id)
+
+        res.status(204).json({
+            ok: true,
+            message: 'Hospital deleted'
+        })
+
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Unexpected server error. Try again!'
+        })
+    }
 
 }
 

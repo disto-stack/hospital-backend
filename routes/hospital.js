@@ -21,7 +21,11 @@ router.post(
 )
 
 router.put('/:id',
-    [],
+    [
+        validateJWT,
+        check('name', 'hospital name empty or invalid').notEmpty(),
+        validateFields
+    ],
     updateHospital
 )
 
