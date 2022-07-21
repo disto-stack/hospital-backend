@@ -9,7 +9,7 @@ const dbConnection = async () => {
             useUnifiedTopology: true, 
             useCreateIndex: true
         }
-        await mongoose.connect(process.env.mongoURLConection, mongooseConnectConfig)
+        await mongoose.connect(process.env.MONGO_URL_CONNECTION, mongooseConnectConfig)
 
         console.log('Db online')
     } catch (error) {

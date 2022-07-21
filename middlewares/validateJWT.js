@@ -12,7 +12,7 @@ const validateJWT = (req, res, next) => {
 
     try {
         
-        const { userId } = jwt.verify(token, process.env.JWTSecretKey)
+        const { userId } = jwt.verify(token, process.env.JWT_SECRET_KEY)
         req.userId = userId
 
         next()
